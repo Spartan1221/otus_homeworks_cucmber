@@ -25,11 +25,12 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    testImplementation('com.codeborne:selenide:5.25.0')
-    testImplementation("io.qameta.allure:allure-selenide:${allureVersion}")
-    testImplementation('io.github.bonigarcia:webdrivermanager:4.4.3')
-    testImplementation('org.assertj:assertj-core:3.21.0')
-    testImplementation('org.slf4j:slf4j-simple:1.7.30')
+    implementation("io.qameta.allure:allure-selenide:${allureVersion}")
+    implementation('io.github.bonigarcia:webdrivermanager:4.2.0')
+    implementation('org.assertj:assertj-core:3.21.0')
+    implementation('org.slf4j:slf4j-simple:1.7.30')
+// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
