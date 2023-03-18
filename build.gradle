@@ -15,6 +15,9 @@ repositories {
 ext {
     allureVersion = '2.16.1'
     junitVersion = '5.8.1'
+    seleniumVersion = '3.141.59'
+    webdrivermanagerVersion = '4.2.0'
+    assertjVersion = '3.21.0'
 }
 
 sourceCompatibility = '11'
@@ -25,20 +28,20 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    implementation("io.qameta.allure:allure-selenide:${allureVersion}")
-    implementation('io.github.bonigarcia:webdrivermanager:4.2.0')
-    implementation('org.assertj:assertj-core:3.21.0')
+    implementation("org.seleniumhq.selenium:selenium-java:${seleniumVersion}")
+    implementation("io.github.bonigarcia:webdrivermanager:${webdrivermanagerVersion}")
+    implementation("org.assertj:assertj-core:${assertjVersion}")
     implementation('org.slf4j:slf4j-simple:1.7.30')
-// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
 
 test {
     useJUnitPlatform()
+    systemProperty "browser", "chrome"
 }
 allure {
     autoconfigure = true

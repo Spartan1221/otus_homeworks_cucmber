@@ -13,7 +13,6 @@ import java.net.URL;
 public interface IWebDriver {
 
     String REMOTE_URL = System.getProperty("webdriver.remote.url");
-    boolean HEADLESS = Boolean.valueOf(System.getProperty("webdriver.headless"));
 
     public WebDriver newDriver();
 
@@ -35,6 +34,12 @@ public interface IWebDriver {
             switch (driverType) {
                 case CHROME:
                     wdmConfig.setChromeDriverVersion(browserVersion);
+                    break;
+                case FIREFOX:
+                    wdmConfig.setGeckoDriverVersion(browserVersion);
+                    break;
+                case OPERA:
+                    wdmConfig.setOperaDriverVersion(browserVersion);
                     break;
                 default:
                     throw new DriverTypeNotSupported(driverType);
