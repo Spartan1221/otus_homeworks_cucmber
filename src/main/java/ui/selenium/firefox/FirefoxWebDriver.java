@@ -1,4 +1,4 @@
-package ui.selenium.chrome;
+package ui.selenium.firefox;
 
 import exceptions.DriverTypeNotSupported;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -17,12 +17,9 @@ public class FirefoxWebDriver implements IWebDriver {
     @Override
     public WebDriver newDriver() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.addArguments("--homepage=about:blank");
+       firefoxOptions.addArguments("--homepage=about:blank");
         firefoxOptions.addArguments("--ignore-certificate-errors");
         firefoxOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        firefoxOptions.setCapability(CapabilityType.VERSION, System.getProperty("browser.version", "107.0"));
-        firefoxOptions.setCapability(CapabilityType.BROWSER_NAME, System.getProperty("browser", "firefox"));
-        firefoxOptions.setCapability("enableVNC", Boolean.parseBoolean(System.getProperty("enableVNC", "false")));
 
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
@@ -30,7 +27,7 @@ public class FirefoxWebDriver implements IWebDriver {
 
         if (getRemoteUrl() == null) {
             try {
-                downloadLocalWebDriver(DriverManagerType.CHROME);
+                downloadLocalWebDriver(DriverManagerType.FIREFOX);
             } catch (DriverTypeNotSupported ex) {
                 ex.printStackTrace();
             }

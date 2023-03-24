@@ -14,7 +14,7 @@ public interface IWebDriver {
 
     String REMOTE_URL = System.getProperty("webdriver.remote.url");
 
-    public WebDriver newDriver();
+    WebDriver newDriver();
 
     default URL getRemoteUrl() {
         try {

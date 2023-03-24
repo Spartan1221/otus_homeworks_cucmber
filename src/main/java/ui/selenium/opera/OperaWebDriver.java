@@ -1,4 +1,4 @@
-package ui.selenium.chrome;
+package ui.selenium.opera;
 
 import exceptions.DriverTypeNotSupported;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -20,9 +20,6 @@ public class OperaWebDriver implements IWebDriver {
         operaOptions.addArguments("--homepage=about:blank");
         operaOptions.addArguments("--ignore-certificate-errors");
         operaOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        operaOptions.setCapability(CapabilityType.VERSION, System.getProperty("browser.version", "107.0"));
-        operaOptions.setCapability(CapabilityType.BROWSER_NAME, System.getProperty("browser", "firefox"));
-        operaOptions.setCapability("enableVNC", Boolean.parseBoolean(System.getProperty("enableVNC", "false")));
 
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.PERFORMANCE, Level.INFO);
@@ -30,7 +27,7 @@ public class OperaWebDriver implements IWebDriver {
 
         if (getRemoteUrl() == null) {
             try {
-                downloadLocalWebDriver(DriverManagerType.CHROME);
+                downloadLocalWebDriver(DriverManagerType.OPERA);
             } catch (DriverTypeNotSupported ex) {
                 ex.printStackTrace();
             }

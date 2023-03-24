@@ -23,9 +23,6 @@ public class ChromeWebDriver implements IWebDriver {
         chromeOptions.addArguments("--homepage=about:blank");
         chromeOptions.addArguments("--ignore-certificate-errors");
         chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        chromeOptions.setCapability(CapabilityType.VERSION, System.getProperty("browser.version", "107.0"));
-        chromeOptions.setCapability(CapabilityType.BROWSER_NAME, System.getProperty("browser", "chrome"));
-        chromeOptions.setCapability("enableVNC", Boolean.parseBoolean(System.getProperty("enableVNC", "false")));
 
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.PERFORMANCE, Level.INFO);

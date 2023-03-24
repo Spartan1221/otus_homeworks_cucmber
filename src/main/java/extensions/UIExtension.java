@@ -1,6 +1,7 @@
 package extensions;
 
 import annotations.Driver;
+import listenners.MouseListener;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -21,10 +22,9 @@ public class UIExtension implements BeforeEachCallback, AfterEachCallback {
 
 
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         driver = new WebDriverFactory().getDriver();
-        //TODO add mouse listener
-        //driver.register(new MouseListener());
+        driver.register(new MouseListener());
         Set<Field> fields = getAnnotatedFields(Driver.class, context);
 
         for (Field field : fields) {
@@ -45,7 +45,7 @@ public class UIExtension implements BeforeEachCallback, AfterEachCallback {
     }
 
     @Override
-    public void afterEach(ExtensionContext context) throws Exception {
+    public void afterEach(ExtensionContext context) {
         if (driver != null) {
             driver.close();
             driver.quit();

@@ -3,8 +3,8 @@ package ui.selenium;
 import exceptions.DriverTypeNotSupported;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import ui.selenium.chrome.ChromeWebDriver;
-import ui.selenium.chrome.FirefoxWebDriver;
-import ui.selenium.chrome.OperaWebDriver;
+import ui.selenium.firefox.FirefoxWebDriver;
+import ui.selenium.opera.OperaWebDriver;
 
 import java.util.Locale;
 

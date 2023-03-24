@@ -18,6 +18,8 @@ ext {
     seleniumVersion = '3.141.59'
     webdrivermanagerVersion = '4.2.0'
     assertjVersion = '3.21.0'
+    browser = 'chrome'
+    baseUrl = 'https://otus.ru'
 }
 
 sourceCompatibility = '11'
@@ -41,7 +43,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    systemProperty "browser", "chrome"
+    systemProperty "browser", "${browser}"
+    systemProperty "baseUrl", "${baseUrl}"
 }
 allure {
     autoconfigure = true
