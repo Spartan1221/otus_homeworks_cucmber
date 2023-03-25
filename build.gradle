@@ -39,13 +39,26 @@ dependencies {
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
 }
 
 test {
+    checkstyleTest
     useJUnitPlatform()
+
+    spotbugs
     systemProperty "browser", "${browser}"
     systemProperty "baseUrl", "${baseUrl}"
 }
+
+checkstyleMain {
+    source ='src/main/java'
+}
+
+checkstyleTest {
+    source ='src/test/java'
+}
+
 allure {
     autoconfigure = true
     version = "${allureVersion}"

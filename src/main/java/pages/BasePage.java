@@ -1,7 +1,10 @@
 package pages;
 
 import annotations.Path;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import pageobject.PageObject;
 
 public abstract class BasePage<T> extends PageObject<T> {
@@ -11,6 +14,17 @@ public abstract class BasePage<T> extends PageObject<T> {
     }
 
     private String baseUrl = System.getProperty("webdriver.base.url", "https://otus.ru");
+
+    @FindBy(tagName = "h1")
+    private WebElement header;
+
+    public T headerShouldBeSameAs(String expectedHeader){
+        Assertions.assertThat(this.header.getText())
+                .as("заголовок не соответствует ожиданиям")
+                .isEqualTo(expectedHeader);
+
+        return (T)this;
+    }
 
     private String getPath(){
         Path path = getClass().getAnnotation(Path.class);
