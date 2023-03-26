@@ -1,6 +1,7 @@
 package com.example.otus_homeworks;
 
 import annotations.Driver;
+import conmponents.CategoriesFilterComponent;
 import data.CoursesCategoryData;
 import extensions.UIExtension;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,10 @@ public class LolTest {
                 .open()
                 .clickCategoryCourseLinkByName(CoursesCategoryData.Progamming)
                 .headerShouldBeSameAs("Каталог");
+        new CategoriesFilterComponent(driver)
+                .checkboxStatusShouldBeSameAs(CoursesCategoryData.Progamming, true);
+
+
     }
 
 }
