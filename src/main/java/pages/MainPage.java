@@ -2,6 +2,7 @@ package pages;
 
 import annotations.Path;
 import data.CoursesCategoryData;
+import elements.Button;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,8 @@ public class MainPage extends BasePage<MainPage>{
     private WebElement navCategoryLink;
 
     private String navCategoryLinkTemplateSelector = ".course-categories__nav a[title='%s']";
+
+    private Button<MainPage> signInButton = new Button<>(driver, By.cssSelector("button.signIn"));
 
     public CoursesCatalogPage clickCategoryCourseLinkByName(CoursesCategoryData categoryData){
         String selector = String.format(navCategoryLinkTemplateSelector, categoryData.getName());

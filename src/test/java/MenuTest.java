@@ -1,4 +1,9 @@
 import annotations.Driver;
+import conmponents.menu.HeaderMenuComponent;
+import conmponents.popups.IPopup;
+import conmponents.popups.MenuPopup;
+import data.HeaderMenuData;
+import data.ModalStateData;
 import extensions.UIExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +20,14 @@ public class MenuTest {
     public void checkCourseBlockInLearningMenuTest(){
         new MainPage(driver)
                 .open();
+
+        new MenuPopup(driver)
+                .modalState(ModalStateData.INVISIBLE);
+
+        new HeaderMenuComponent(driver)
+                .moveToHeaderMenu(HeaderMenuData.LEARNING)
+                .modalState(ModalStateData.VISIBLE)
+                .recommendationBlockVisible();
 
     }
 }

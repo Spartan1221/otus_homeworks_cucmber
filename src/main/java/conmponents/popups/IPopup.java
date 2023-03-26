@@ -1,6 +1,8 @@
 package conmponents.popups;
 
+import data.ModalStateData;
+
 public interface IPopup<T> {
-    T modalNotVisible();
-    T modalVisible();
+
+    T modalState(ModalStateData modalStateData);
 }

@@ -1,6 +1,7 @@
 package conmponents.menu;
 
 import conmponents.AbsBaseComponent;
+import conmponents.popups.MenuPopup;
 import data.HeaderMenuData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,11 +15,12 @@ public class HeaderMenuComponent extends AbsBaseComponent {
 
     private String headerMenuSelector = "[data-name='$s']";
 
-    public void moveToHeaderMenu(HeaderMenuData headerMenuData){
+    public MenuPopup moveToHeaderMenu(HeaderMenuData headerMenuData){
         String selector = String.format(headerMenuSelector, headerMenuData.name().toLowerCase(Locale.ROOT));
         this.actions.moveToElement($(By.cssSelector(selector)))
                 .build()
                 .perform();
 
+        return new MenuPopup(driver);
     }
 }

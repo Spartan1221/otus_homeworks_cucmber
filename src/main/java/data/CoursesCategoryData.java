@@ -1,7 +1,7 @@
 package data;
 
 public enum CoursesCategoryData {
-    Progamming("");
+    Progamming("Программирование");
 
     private String name;
 
