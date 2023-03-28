@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Path("/")
-public class MainPage extends BasePage<MainPage>{
+public class MainPage extends BasePage<MainPage> {
 
     public MainPage(WebDriver driver) {
         super(driver);

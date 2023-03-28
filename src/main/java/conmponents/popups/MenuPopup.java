@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Popup("css:.js-header3-popup:not[style*='none']")
-public class MenuPopup extends AbsBasePopup<MenuPopup>{
+public class MenuPopup extends AbsBasePopup<MenuPopup> {
     public MenuPopup(WebDriver driver) {
         super(driver);
     }

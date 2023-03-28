@@ -17,7 +17,7 @@ public class HeaderMenuComponent extends AbsBaseComponent {
 
     public MenuPopup moveToHeaderMenu(HeaderMenuData headerMenuData){
         String selector = String.format(headerMenuSelector, headerMenuData.name().toLowerCase(Locale.ROOT));
-        this.actions.moveToElement($(By.cssSelector(selector)))
+        this.actions.moveToElement(findElement(By.cssSelector(selector)))
                 .build()
                 .perform();
 

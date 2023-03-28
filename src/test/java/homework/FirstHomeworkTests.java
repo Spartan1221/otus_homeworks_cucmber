@@ -1,4 +1,4 @@
-package homework1;
+package homework;
 
 import annotations.Driver;
 import conmponents.CourseCardComponent;
@@ -38,15 +38,15 @@ public class FirstHomeworkTests {
 
     @Test
     public void clickOnLatestCourseTest(){
-        new MainPage(driver)
-                .open();
-
+        new MainPage(driver).open();
         new CourseCardComponent(driver)
-                .getCourseDates();
+                .clickOnLatestDateCourse();
     }
 
     @Test
-    public void clickOnEarliestCourseTest(){
-
+    public void clickOnEarliestCourseTest() {
+        new MainPage(driver).open();
+        new CourseCardComponent(driver)
+                .clickOnEarliestDateCourse();
     }
 }

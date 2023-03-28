@@ -11,7 +11,7 @@ public class Button<T> extends PageObject<Button>  {
 
     public Button(WebDriver driver, By by) {
         super(driver);
-        this.element = $(by);
+        this.element = findElement(by);
     }
 
     public void click() {

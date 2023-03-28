@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'io.qameta.allure' version '2.9.3'
     id 'checkstyle'
-    id("com.github.spotbugs") version "5.0.13"
+    id 'com.github.spotbugs' version '5.0.13'
 }
 
 group 'com.example'
@@ -39,16 +39,18 @@ dependencies {
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
 }
 
 test {
-    checkstyleTest
     useJUnitPlatform()
 
-    spotbugs
     systemProperty "browser", "${browser}"
     systemProperty "baseUrl", "${baseUrl}"
+}
+
+checkstyle {
+    toolVersion "8.12"
+    ignoreFailures false
 }
 
 checkstyleMain {
@@ -59,11 +61,18 @@ checkstyleTest {
     source ='src/test/java'
 }
 
-allure {
-    autoconfigure = true
-    version = "${allureVersion}"
+spotbugs {
+    ignoreFailures = false
+    showStackTraces = true
+    showProgress = true
+}
 
-    useJUnit5 {
-        version = "${allureVersion}"
+spotbugsMain {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+            stylesheet = 'fancy-hist.xsl'
+        }
     }
 }

@@ -21,7 +21,7 @@ public class CategoriesFilterComponent extends AbsBaseComponent{
 
     public CategoriesFilterComponent checkboxStatusShouldBeSameAs(CoursesCategoryData categoryData, boolean expectedStatus){
         String locator = String.format(checkboxInputLocatorTemplate, categoryData.getName());
-        Assertions.assertThat($(By.xpath(locator)).isSelected())
+        Assertions.assertThat(findElement(By.xpath(locator)).isSelected())
                 .as("checkbox status is wrong")
                 .isTrue();
 

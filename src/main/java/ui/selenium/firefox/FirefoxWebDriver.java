@@ -17,7 +17,7 @@ public class FirefoxWebDriver implements IWebDriver {
     @Override
     public WebDriver newDriver() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-       firefoxOptions.addArguments("--homepage=about:blank");
+        firefoxOptions.addArguments("--homepage=about:blank");
         firefoxOptions.addArguments("--ignore-certificate-errors");
         firefoxOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 

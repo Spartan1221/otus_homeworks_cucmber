@@ -21,7 +21,7 @@ public abstract class PageObject<T> {
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement $(By locator){
+    public WebElement findElement(By locator){
         return driver.findElement(locator);
     }
 }

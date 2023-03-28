@@ -4,7 +4,7 @@ public enum ModalStateData {
     VISIBLE(true),
     INVISIBLE(false);
 
-     private boolean state;
+    private boolean state;
 
     ModalStateData(boolean state) {
         this.state = state;
