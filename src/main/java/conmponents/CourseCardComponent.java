@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BinaryOperator;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -29,20 +30,18 @@ public class CourseCardComponent extends AbsBaseComponent {
         return driver.findElements(By.cssSelector(lessonsTitleSelector));
     }
 
-    public CourseCardComponent clickOnEarliestDateCourse() {
-        Date earliestDate = getListDate()
-                .stream()
-                .reduce((date, date2) -> date.before(date2) ? date : date2)
-                .get();
-        clickByCourseDate(earliestDate);
 
-        return this;
-    }
+    public CourseCardComponent clickOnCourseByBoundaryDate(Boolean isLatest) {
+        BinaryOperator<Date> selectDate = null;
+        if (isLatest){
+            selectDate = (date, date2) -> date.after(date2) ? date : date2;
+        }else {
+            selectDate = (date, date2) -> date.before(date2) ? date : date2;
+        }
 
-    public CourseCardComponent clickOnLatestDateCourse() {
         Date latestDate = getListDate()
                 .stream()
-                .reduce((date, date2) -> date.after(date2) ? date : date2)
+                .reduce(selectDate)
                 .get();
 
         clickByCourseDate(latestDate);
@@ -71,9 +70,9 @@ public class CourseCardComponent extends AbsBaseComponent {
                 .collect(Collectors.toList());
         List<Date> dateList1 = driver.findElements(By.cssSelector(courseStartDateTwoSelector))
                 .stream()
-                .filter(element -> Pattern.matches("\\d+ [а-яёА-ЯЁ]+ \\d+ [а-яёА-ЯЁ]+", element.getText()))
-                .map(element -> element.getText().replaceFirst("\\d+ месяцев|месяца", ""))
-                .map(s -> parseDate(s))
+                .filter(element -> Pattern.matches("\\d+\\s+[а-яёА-ЯЁ]+\\s+\\d+\\s+[а-яёА-ЯЁ]+", element.getText()))
+                .map(element -> element.getText().replaceFirst("\\d+\\s+месяцев|месяца", ""))
+                .map(s -> parseDate(s.replaceAll("\\s+", " ")))
                 .collect(Collectors.toList());
         dateList.addAll(dateList1);
 

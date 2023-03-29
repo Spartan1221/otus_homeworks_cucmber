@@ -40,13 +40,13 @@ public class FirstHomeworkTests {
     public void clickOnLatestCourseTest(){
         new MainPage(driver).open();
         new CourseCardComponent(driver)
-                .clickOnLatestDateCourse();
+                .clickOnCourseByBoundaryDate(true);
     }
 
     @Test
     public void clickOnEarliestCourseTest() {
         new MainPage(driver).open();
         new CourseCardComponent(driver)
-                .clickOnEarliestDateCourse();
+                .clickOnCourseByBoundaryDate(false);
     }
 }
