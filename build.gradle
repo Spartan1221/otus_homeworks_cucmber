@@ -18,6 +18,8 @@ ext {
     seleniumVersion = '3.141.59'
     webdrivermanagerVersion = '4.2.0'
     assertjVersion = '3.21.0'
+    cucumberVersion = '5.5.0'
+    guiceVersion = '5.1.0'
     browser = 'chrome'
     baseUrl = 'https://otus.ru'
 }
@@ -34,10 +36,16 @@ dependencies {
     implementation("io.github.bonigarcia:webdrivermanager:${webdrivermanagerVersion}")
     implementation("org.assertj:assertj-core:${assertjVersion}")
     implementation('org.slf4j:slf4j-simple:1.7.30')
+    implementation ("io.cucumber:cucumber-java:${cucumberVersion}")
+    implementation ("io.cucumber:cucumber-guice:${cucumberVersion}")
+    implementation ("io.cucumber:cucumber-junit:${cucumberVersion}")
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'
 
+    implementation ("com.google.inject:guice:${guiceVersion}")
 
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
+    implementation ("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
 
@@ -73,6 +81,26 @@ spotbugsMain {
             required = true
             outputLocation = file("$buildDir/reports/spotbugs/main/spotbugs.html")
             stylesheet = 'fancy-hist.xsl'
+        }
+    }
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumberCli() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                '--plugin', 'pretty',
+                '--glue', 'com.otus',
+                'src/test/java/resources']
         }
     }
 }

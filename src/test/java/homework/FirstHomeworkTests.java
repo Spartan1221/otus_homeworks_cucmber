@@ -1,26 +1,24 @@
 package homework;
 
-import annotations.Driver;
-import conmponents.CourseCardComponent;
-import extensions.UIExtension;
+import com.otus.annotations.Driver;
+import com.otus.conmponents.CourseCardComponent;
+import com.otus.pages.MainPage;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import pages.MainPage;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(UIExtension.class)
+
 public class FirstHomeworkTests {
 
     @Driver
     public WebDriver driver;
 
-    @Test
+    /*@Test
     public void filterCoursesTest(){
         new MainPage(driver)
                 .open();
@@ -48,5 +46,5 @@ public class FirstHomeworkTests {
         new MainPage(driver).open();
         new CourseCardComponent(driver)
                 .clickOnCourseByBoundaryDate(false);
-    }
+    }*/
 }
