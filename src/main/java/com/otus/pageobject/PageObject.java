@@ -20,7 +20,7 @@ public abstract class PageObject<T> {
     public PageObject(GuiceScooped guiceScooped) {
         this.driver = guiceScooped.driver;
         this.actions = new Actions(driver);
-        this.baseWaiters = new BaseWaiters(driver);
+        this.baseWaiters = new BaseWaiters(guiceScooped);
 
         PageFactory.initElements(driver, this);
     }

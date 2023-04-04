@@ -15,7 +15,7 @@ public class MainPageSteps {
         mainPage.open();
     }
 
-    @Тогда("На главной странице отображается заголовок {string}}")
+    @Тогда("На главной странице отображается заголовок {string}")
     public void mainPageHeaderShouldBeVisible(String headerText){
         mainPage.headerShouldBeSameAs(headerText);
     }

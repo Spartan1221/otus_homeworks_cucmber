@@ -1,5 +1,7 @@
 package com.otus.waiters;
 
+import com.google.inject.Inject;
+import com.otus.di.GuiceScooped;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +14,10 @@ public class BaseWaiters {
 
     private WebDriverWait webDriverWait;
 
-    public BaseWaiters(WebDriver driver) {
+    @Inject
+    public BaseWaiters(GuiceScooped guiceScooped) {
         this.webDriverWait = new WebDriverWait(
-                driver,
+                guiceScooped.driver,
                 Integer.parseInt(System.getProperty("waiter-timeout-second", "5"))
         );
     }
