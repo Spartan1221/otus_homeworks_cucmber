@@ -20,6 +20,7 @@ ext {
     assertjVersion = '3.21.0'
     cucumberVersion = '5.5.0'
     guiceVersion = '5.1.0'
+    jsoupVersion = '1.15.4'
     browser = 'chrome'
     baseUrl = 'https://otus.ru'
 }
@@ -42,6 +43,7 @@ dependencies {
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'
 
     implementation ("com.google.inject:guice:${guiceVersion}")
+    implementation ("org.jsoup:jsoup:${jsoupVersion}")
 
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
