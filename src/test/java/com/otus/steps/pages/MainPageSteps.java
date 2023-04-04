@@ -34,7 +34,5 @@ public class MainPageSteps {
     @Тогда("Выводим информацию в консоль о курсах стартующих на {string} или позже указанной даты")
     public void printCourseInfo(String startDate){
         courseCardComponent.printCourseData(startDate);
-        //TODO if in send data has course when print about it
-        //TODO if there's no info about course in that day than print all courses
     }
 }

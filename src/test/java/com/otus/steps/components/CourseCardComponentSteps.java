@@ -15,8 +15,4 @@ public class CourseCardComponentSteps {
         courseCardComponent.clickOnCourseByTitle(title);
     }
 
-    @Тогда("Отображается курс {string}")
-    public void mainPageHeaderShouldBeVisible(String headerText){
-        //TODO
-    }
 }
