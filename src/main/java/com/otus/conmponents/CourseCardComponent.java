@@ -4,18 +4,17 @@ import com.google.inject.Inject;
 import com.otus.di.GuiceScooped;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.time.format.TextStyle;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CourseCardComponent extends AbsBaseComponent {
 
@@ -28,66 +27,79 @@ public class CourseCardComponent extends AbsBaseComponent {
     private String courseStartDateOneSelector = ".lessons__new-item-bottom div[class='lessons__new-item-start']";
     private String courseStartDateTwoSelector = "div.lessons__new-item-bottom.lessons__new-item-bottom_spec > div.lessons__new-item-time";
 
-    public List<WebElement> getCourseTitles() {
-        return driver.findElements(By.cssSelector(lessonsTitleSelector));
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMMM", Locale.forLanguageTag("ru"));
+
+    @FindBy(css = ".lessons__new-item-container")
+    private List<WebElement> coursesItems;
+
+    public List<WebElement> getCourseItems() {
+        return coursesItems;
     }
 
+    public Map<String, Date> getCourseTitlesAndDates(List<WebElement> courseItems){
+        Map<String, Date> result = new HashMap<>();
 
-    public CourseCardComponent clickOnCourseByBoundaryDate(Boolean isLatest) {
-        BinaryOperator<Date> selectDate = null;
-        if (isLatest){
-            selectDate = (date, date2) -> date.after(date2) ? date : date2;
-        }else {
-            selectDate = (date, date2) -> date.before(date2) ? date : date2;
+        for (WebElement webElement : courseItems){
+            String courseTitle = webElement.findElement(By.cssSelector(lessonsTitleSelector)).getText();
+
+            List<WebElement> elements = webElement.findElements(By.cssSelector(courseStartDateOneSelector));
+            if (elements.size() != 0){
+                Stream.of(elements.get(0))
+                        .map(element -> element.getText().replace("С ", ""))
+                        .map(s -> parseDate(s))
+                        .findFirst()
+                        .ifPresent(date -> result.put(courseTitle, date));
+            }else {
+                WebElement webElement1 = webElement.findElement(By.cssSelector(courseStartDateTwoSelector));
+                Stream.of(webElement1)
+                        .filter(element -> Pattern.matches("\\d+\\s+[а-яёА-ЯЁ]+\\s+\\d+\\s+[а-яёА-ЯЁ]+", element.getText()))
+                        .map(element -> element.getText().replaceFirst("\\d+\\s+месяцев|месяца", ""))
+                        .map(s -> parseDate(s.replaceAll("\\s+", " ")))
+                        .findFirst()
+                        .ifPresent(date -> result.put(courseTitle, date));
+            }
         }
 
-        Date latestDate = getListDate()
-                .stream()
-                .reduce(selectDate)
-                .get();
-
-        clickByCourseDate(latestDate);
-
-        return this;
-    }
-
-    private void clickByCourseDate(Date date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        String partialLinkText = calendar.get(Calendar.DAY_OF_MONTH)
-                + " " + Month.of(calendar.get(Calendar.MONTH) + 1).getDisplayName(TextStyle.FULL, new Locale("ru"));
-
-        this.actions.moveToElement(findElement(By.partialLinkText(partialLinkText)))
-                .click()
-                .build()
-                .perform();
-    }
-
-    private List<Date> getListDate(){
-        List<Date> dateList = driver.findElements(By.cssSelector(courseStartDateOneSelector))
-                .stream()
-                .map(element -> element.getText().replace("С ", ""))
-                .map(s -> parseDate(s))
-                .collect(Collectors.toList());
-        List<Date> dateList1 = driver.findElements(By.cssSelector(courseStartDateTwoSelector))
-                .stream()
-                .filter(element -> Pattern.matches("\\d+\\s+[а-яёА-ЯЁ]+\\s+\\d+\\s+[а-яёА-ЯЁ]+", element.getText()))
-                .map(element -> element.getText().replaceFirst("\\d+\\s+месяцев|месяца", ""))
-                .map(s -> parseDate(s.replaceAll("\\s+", " ")))
-                .collect(Collectors.toList());
-        dateList.addAll(dateList1);
-
-        return dateList;
+        return result;
     }
 
     private Date parseDate(String text){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMMM", Locale.forLanguageTag("ru"));
         try {
             return simpleDateFormat.parse(text);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void clickOnCourseByTitle(String title){
+        driver.findElement(By.partialLinkText(title))
+                .click();
+    }
+
+    public void printCourseData(String startDate){
+        List<WebElement> courseItems = getCourseItems();
+        Map<String, Date> courseTitlesAndDates = getCourseTitlesAndDates(courseItems);
+
+        Date date = parseDate(startDate);
+
+        System.out.println();
+        if (courseTitlesAndDates.containsValue(date)){
+            for (Map.Entry<String, Date> entry : courseTitlesAndDates.entrySet()) {
+                if (entry.getValue().equals(date)){
+                    printData(entry);
+                }
+            }
+        }else {
+            for (Map.Entry<String, Date> entry : courseTitlesAndDates.entrySet()) {
+                if (entry.getValue().after(date)){
+                    printData(entry);
+                }
+            }
+        }
+    }
+
+    private void printData(Map.Entry<String, Date> entry){
+        System.out.println("Имя курса =  " + entry.getKey() + " Дата начала = " + simpleDateFormat.format(entry.getValue()));
     }
 }
