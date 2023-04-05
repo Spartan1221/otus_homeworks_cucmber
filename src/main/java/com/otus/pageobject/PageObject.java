@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public abstract class PageObject<T> {
 
     protected WebDriver driver;

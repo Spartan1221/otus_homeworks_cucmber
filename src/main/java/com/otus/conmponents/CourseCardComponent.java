@@ -83,7 +83,6 @@ public class CourseCardComponent extends AbsBaseComponent {
 
         Date date = parseDate(startDate);
 
-        System.out.println();
         if (courseTitlesAndDates.containsValue(date)){
             for (Map.Entry<String, Date> entry : courseTitlesAndDates.entrySet()) {
                 if (entry.getValue().equals(date)){
