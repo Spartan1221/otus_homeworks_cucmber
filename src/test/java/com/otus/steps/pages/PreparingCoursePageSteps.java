@@ -17,7 +17,6 @@ public class PreparingCoursePageSteps {
 
     @Тогда("^Выводится информация о самом (.*) курсе")
     public void selectMostOrLeastExpensiveCourse(String type){
-        //TODO use jsoup
         preparingCoursePage.printMostOrLeastExpensiveCourseData(type);
     }
 }
