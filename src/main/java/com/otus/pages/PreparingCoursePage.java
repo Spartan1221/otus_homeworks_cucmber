@@ -10,11 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Path("/online")
-public class PreparingCoursePage extends BasePage<PreparingCoursePage>{
+public class PreparingCoursePage extends BasePage<PreparingCoursePage> {
 
     @Inject
     public PreparingCoursePage(GuiceScooped guiceScooped) {
@@ -29,7 +27,7 @@ public class PreparingCoursePage extends BasePage<PreparingCoursePage>{
     private String coursePriceSelector = "div.lessons__new-item-price";
 
     public List<WebElement> getCourseItems() {
-        return coursesItems;
+        return List.copyOf(coursesItems);
     }
 
     public void printMostOrLeastExpensiveCourseData(String type){

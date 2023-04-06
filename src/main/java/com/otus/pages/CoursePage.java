@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CoursePage extends BasePage<CoursePage>{
+public class CoursePage extends BasePage<CoursePage> {
 
     @Inject
     public CoursePage(GuiceScooped guiceScooped) {

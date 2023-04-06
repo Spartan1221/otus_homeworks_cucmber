@@ -8,12 +8,8 @@ import org.openqa.selenium.support.FindBy;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
-import java.time.format.TextStyle;
 import java.util.*;
-import java.util.function.BinaryOperator;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CourseCardComponent extends AbsBaseComponent {
@@ -33,7 +29,7 @@ public class CourseCardComponent extends AbsBaseComponent {
     private List<WebElement> coursesItems;
 
     public List<WebElement> getCourseItems() {
-        return coursesItems;
+        return List.copyOf(coursesItems);
     }
 
     public Map<String, Date> getCourseTitlesAndDates(List<WebElement> courseItems){
@@ -72,9 +68,10 @@ public class CourseCardComponent extends AbsBaseComponent {
         return null;
     }
 
-    public void clickOnCourseByTitle(String title){
-        driver.findElement(By.partialLinkText(title))
-                .click();
+    public void clickOnCourseByTitle(String title) {
+        actions.moveToElement(driver.findElement(By.partialLinkText(title)))
+                .click()
+                .perform();
     }
 
     public void printCourseData(String startDate){
