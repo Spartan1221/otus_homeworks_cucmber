@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'io.qameta.allure' version '2.9.3'
+    id 'io.qameta.allure' version '2.8.1'
     id 'checkstyle'
     id 'com.github.spotbugs' version '5.0.13'
 }
@@ -13,8 +13,10 @@ repositories {
 }
 
 ext {
-    allureVersion = '2.16.1'
+    aspectVersion = "1.9.5"
+    allureVersion = '2.14.0'
     junitVersion = '5.8.1'
+    junitPioneerVersion = "1.4.2"
     seleniumVersion = '3.141.59'
     webdrivermanagerVersion = '4.2.0'
     assertjVersion = '3.21.0'
@@ -45,8 +47,18 @@ dependencies {
     implementation ("com.google.inject:guice:${guiceVersion}")
     implementation ("org.jsoup:jsoup:${jsoupVersion}")
 
+    implementation ("io.qameta.allure:allure-junit5:${allureVersion}")
+    implementation ("io.qameta.allure:allure-selenide:${allureVersion}")
+    implementation ("io.qameta.allure:allure-assertj:${allureVersion}")
+    implementation ("io.qameta.allure:allure-cucumber-jvm:${allureVersion}")
+    implementation "io.qameta.allure:allure-selenide:2.13.0"
+    implementation "org.aspectj:aspectjrt:${aspectVersion}"
+    implementation "org.aspectj:aspectjweaver:${aspectVersion}"
+
     implementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
+    implementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    implementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     implementation ("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
@@ -56,6 +68,23 @@ test {
 
     systemProperty "browser", "${browser}"
     systemProperty "baseUrl", "${baseUrl}"
+}
+
+allure {
+    autoconfigure = true
+    aspectjweaver = true
+    version = "${allureVersion}"
+
+    useJUnit5 {
+        version = "${allureVersion}"
+    }
+
+    resultsDir = file('allure-results')
+    reportDir = file('allure-reports')
+}
+
+configurations {
+    testCompile
 }
 
 checkstyle {
